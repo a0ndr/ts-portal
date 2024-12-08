@@ -1,0 +1,1 @@
+mkdir temp && (robocopy . temp /E /XD node_modules /XD .svelte-kit /XD temp /XD .terraform /XD terraform.tfstate.d /XF *tfstate* /XF *.hcl /NS /NC /NFL /NDL /NP /NJH /NJS) ^& cd temp && wsl tar -czf ../portal.tar.gz . && cd ..
