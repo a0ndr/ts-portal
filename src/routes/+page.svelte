@@ -8,32 +8,46 @@
 	let details: string = '';
 	let detailsElement: HTMLElement;
 	let detailsToggled = false;
-	let apiUrl: string;
+
 	let code: string;
 	let state: string;
 
+	let authorizationId: string;
+	let result: string;
+
 	onMount(async () => {
 		const params = new URLSearchParams(window.location.search);
-		if (!params.get('code') || !params.get('state')) {
+
+		if (params.has('code') && params.has('state'))
+		{
+			code = params.get('code')!;
+			state = params.get('state')!;
+
+			document.getElementById('loading')?.classList.add('hidden');
+			document.getElementById('authConfirmation')?.classList.remove('hidden');
+		}
+		else if (params.has('authorizationId') && params.has('result'))
+		{
+			authorizationId = params.get('authorizationId')!;
+			result = params.get('ok')!;
+
+			document.getElementById('loading')?.classList.add('hidden');
+			document.getElementById('paymentConfirmation')?.classList.remove('hidden');
+		}
+		else
+		{
 			icon.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color: #f66151;"></i>';
 			title.innerHTML = 'Error';
 			description.innerHTML =
-				'An error occurred while processing your request. Please try again or contact the administrator.';
-			showDetails.innerText = 'Show Details';
-			details = 'code or state not specified';
+				'Cannot determine the intended action because the provided query parameters are conflicting or incomplete.';
 
 			document.getElementById('loading')?.classList.add('hidden');
 			document.getElementById('processing')?.classList.remove('hidden');
-		} else {
-			document.getElementById('loading')?.classList.add('hidden');
-			document.getElementById('confirmation')?.classList.remove('hidden');
 		}
-		code = params.get('code')!;
-		state = params.get('state')!;
 	});
 
 	function process() {
-		document.getElementById('confirmation')?.classList.add('hidden');
+		document.getElementById('authConfirmation')?.classList.add('hidden');
 		document.getElementById('processing')?.classList.remove('hidden');
 
 		try {
@@ -105,13 +119,18 @@
 	<div class="content loading" id="loading">
 		<p class="icon"><span class="loader"></span></p>
 	</div>
-	<div class="confirmation hidden" id="confirmation">
+	<div class="confirmation hidden" id="authConfirmation">
 		<h2 class="title">Confirm</h2>
 		<p class="details">Are you sure you want to authorize?</p>
 		<div id="actions">
 			<button on:click={cancel} class="secondary">Cancel</button>
 			<button on:click={process} class="primary">Authorize</button>
 		</div>
+	</div>
+	<div class="confirmation hidden" id="paymentConfirmation">
+		<p class="icon"><i class="fa-solid fa-circle-check" style="color: #8ff0a4;"></i></p>
+		<h2 class="title">Payment created</h2>
+		<p class="details">The payment request has succeeded. You can close this window.</p>
 	</div>
 	<div class="confirmation hidden" id="closed">
 		<h2 class="title">Canceled</h2>
