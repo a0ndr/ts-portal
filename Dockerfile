@@ -1,14 +1,4 @@
-FROM node:20-slim AS build
+FROM httpd:2-alpine3.21
 
-WORKDIR /app
-COPY package.json .
-COPY pnpm-lock.yaml .
-RUN npm i -g pnpm
-
-RUN pnpm i 
-
-COPY . .
-RUN pnpm build
-RUN pnpm prune --production
-
-CMD ["node", "build"]
+WORKDIR /usr/local/apache2/htdocs/
+COPY ./src/ .
