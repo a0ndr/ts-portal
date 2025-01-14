@@ -15,6 +15,8 @@
 	let authorizationId: string;
 	let result: string;
 
+	const API_URL = "https://api.ondrejcak.sk";
+
 	onMount(async () => {
 		const params = new URLSearchParams(window.location.search);
 
@@ -51,7 +53,7 @@
 		document.getElementById('processing')?.classList.remove('hidden');
 
 		try {
-			fetch(`http://localhost:8080/callback`, {
+			fetch(API_URL+"/callback", {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
