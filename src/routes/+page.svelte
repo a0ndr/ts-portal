@@ -15,29 +15,24 @@
 	let authorizationId: string;
 	let result: string;
 
-	const API_URL = "https://api.ondrejcak.sk";
+	const API_URL = 'https://api.ondrejcak.sk';
 
 	onMount(async () => {
 		const params = new URLSearchParams(window.location.search);
 
-		if (params.has('code') && params.has('state'))
-		{
+		if (params.has('code') && params.has('state')) {
 			code = params.get('code')!;
 			state = params.get('state')!;
 
 			document.getElementById('loading')?.classList.add('hidden');
 			document.getElementById('authConfirmation')?.classList.remove('hidden');
-		}
-		else if (params.has('authorizationId') && params.has('result'))
-		{
+		} else if (params.has('authorizationId') && params.has('result')) {
 			authorizationId = params.get('authorizationId')!;
 			result = params.get('ok')!;
 
 			document.getElementById('loading')?.classList.add('hidden');
 			document.getElementById('paymentConfirmation')?.classList.remove('hidden');
-		}
-		else
-		{
+		} else {
 			icon.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color: #f66151;"></i>';
 			title.innerHTML = 'Error';
 			description.innerHTML =
@@ -53,7 +48,7 @@
 		document.getElementById('processing')?.classList.remove('hidden');
 
 		try {
-			fetch(API_URL+"/callback", {
+			fetch(API_URL + '/callback', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
