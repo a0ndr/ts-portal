@@ -11,4 +11,4 @@ COPY . .
 RUN pnpm build
 RUN pnpm prune --production
 
-CMD ["pnpm", "preview", "--host"]
+CMD ["node", "build"]
