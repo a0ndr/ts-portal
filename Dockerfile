@@ -1,4 +1,4 @@
-FROM httpd:2-alpine3.21
+FROM php:8.3-apache
 
-WORKDIR /usr/local/apache2/htdocs/
+WORKDIR /var/www/html
 COPY ./src/ .

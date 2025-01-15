@@ -117,7 +117,7 @@
 
             try {
                 let rsp = $.ajax({
-                    url: 'https://api.tadam.space/callback',
+                    url: '<?=getenv("ADMIN_API_URL")?>/callback',
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
