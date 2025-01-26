@@ -127,7 +127,7 @@
                     })
                 });
 
-                if (rsp.status != 200) {
+                if (rsp.status != 204) {
                     $("#processing").hide();
                     showError("An error occurred while processing your request. Please try again or contact the administrator.", rsp.responseJSON.error);
                     return;
